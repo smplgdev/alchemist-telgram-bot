@@ -1,0 +1,7 @@
+aiogram==3.0.0b6
+pydantic~=1.10.4
+SQLAlchemy==2.0.1
+asyncpg==0.26.0
+apscheduler
+aioredis
+redis
