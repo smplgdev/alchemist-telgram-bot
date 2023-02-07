@@ -1,6 +1,4 @@
 import sqlalchemy as sa
-from sqlalchemy import ChunkedIteratorResult
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import sessionmaker
 
 from db.models.user import User
@@ -13,7 +11,7 @@ async def get(session_maker: sessionmaker, telegram_id: int) -> User | None:
                 sa.select(User).where(User.telegram_id == telegram_id)
             )
             user = result.one_or_none()
-            return user
+    return user
 
 
 async def create(
@@ -24,7 +22,7 @@ async def create(
         async with session.begin():
             user = User(**user_data)
             await session.merge(user)
-            return user
+    return user
 
 
 async def update(

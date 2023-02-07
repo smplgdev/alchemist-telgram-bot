@@ -6,9 +6,10 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aioredis import Redis
 from sqlalchemy import URL
 
+from create_elements import create_elements
 from db.base import BaseModel
 from db.db import create_async_engine, proceed_schemas, create_session_maker
-from handlers import start
+from handlers import start, play_game
 from services.set_bot_commands import set_bot_commands
 from config import config
 
@@ -45,8 +46,11 @@ async def main():
     )
     storage = RedisStorage(redis=redis)
 
-    dp = Dispatcher(storage=storage)
+    dp = Dispatcher(storage=storage, session_maker=session_maker)
     dp.include_router(start.router)
+    dp.include_router(play_game.router)
+
+    await create_elements(session_maker)
 
     logging.info("Starting bot...")
     try:

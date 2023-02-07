@@ -15,3 +15,6 @@ class Game(BaseModel):
     is_finished = sa.Column(sa.Boolean, default=False)
     start_date = sa.Column(sa.DateTime(timezone=True), default=datetime.datetime.now(tz=pytz.UTC))
     upd_date = sa.Column(sa.DateTime(timezone=True), onupdate=datetime.datetime.now(tz=pytz.UTC))
+
+    def __str__(self) -> str:
+        return f"<Game:{self.id}>"
