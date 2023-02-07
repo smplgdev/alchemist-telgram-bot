@@ -3,7 +3,10 @@ from pydantic import BaseSettings, SecretStr
 
 class Settings(BaseSettings):
     BOT_TOKEN: SecretStr
-    DATABASE_IP: str
+    DB_IP: str
+    DB_USERNAME: str
+    DB_PASSWORD: str
+    DB_NAME: str
     REDIS_IP: str
 
     class Config:
