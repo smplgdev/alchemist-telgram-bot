@@ -7,9 +7,7 @@ from aioredis import Redis
 from sqlalchemy import URL
 
 from config import config
-from create_elements import create_elements
-from db.base import BaseModel
-from db.db import create_async_engine, create_session_maker, delete_schemas, proceed_schemas
+from db.db import create_async_engine, create_session_maker
 from handlers import start, play_game
 from services.set_bot_commands import set_bot_commands
 
