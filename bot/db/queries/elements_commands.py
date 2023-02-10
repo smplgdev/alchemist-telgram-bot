@@ -87,6 +87,9 @@ async def add_new_unlocked_element(
         element_id: int
 ):
     async with session_maker() as session:
+        game = await session.get(Game, game_id)
+        if element_id in game.unlocked_elements_ids:
+            return
         await session.execute(
             sa.update(Game).
             where(Game.id == game_id).
