@@ -19,3 +19,8 @@ async def proceed_schemas(engine: AsyncEngine, metadata) -> None:
     async with engine.begin() as conn:
         await conn.run_sync(metadata.create_all)
 
+
+async def delete_schemas(engine: AsyncEngine, metadata) -> None:
+    async with engine.begin() as conn:
+        await conn.run_sync(metadata.drop_all)
+

@@ -8,10 +8,11 @@ async def init(
         user_telegram_id: int,
 ) -> Game:
     async with session_maker() as session:
-        async with session.begin():
-            game = Game(
+        game = await session.merge(
+            Game(
                 user_telegram_id=user_telegram_id,
                 unlocked_elements_ids=[1, 2, 3, 4]
             )
-            await session.merge(game)
+        )
+        await session.commit()
     return game

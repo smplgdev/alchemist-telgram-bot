@@ -1,17 +1,17 @@
-import logging
 import asyncio
+import logging
+
 from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.redis import RedisStorage
-
 from aioredis import Redis
 from sqlalchemy import URL
 
+from config import config
 from create_elements import create_elements
 from db.base import BaseModel
-from db.db import create_async_engine, proceed_schemas, create_session_maker
+from db.db import create_async_engine, create_session_maker, delete_schemas, proceed_schemas
 from handlers import start, play_game
 from services.set_bot_commands import set_bot_commands
-from config import config
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
@@ -38,7 +38,9 @@ async def main():
 
     async_engine = create_async_engine(postgres_url)
     session_maker = create_session_maker(async_engine)
-    await proceed_schemas(async_engine, BaseModel.metadata)
+    await delete_schemas(engine=async_engine, metadata=BaseModel.metadata)
+    await proceed_schemas(engine=async_engine, metadata=BaseModel.metadata)
+    await create_elements(session_maker)
 
     redis = Redis(
         host=config.REDIS_IP,
@@ -49,8 +51,6 @@ async def main():
     dp = Dispatcher(storage=storage, session_maker=session_maker)
     dp.include_router(start.router)
     dp.include_router(play_game.router)
-
-    await create_elements(session_maker)
 
     logging.info("Starting bot...")
     try:

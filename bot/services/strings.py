@@ -4,5 +4,7 @@ START = """Привет, {first_name}!
 
 PLAY_MENU = """Вы находитесь в меню игры. Ниже находятся категории"""
 
-PLAY_BUTTON = "Играть"
+PLAY_BUTTON = "Новая игра"
+ELEMENT_NOT_EXIST = "Такого элемента не существует!"
 STATISTICS_BUTTON = "Статистика"
+YOU_OPENED_NEW_ELEMENT = """Вы открыли новый элемент: {element_title}!"""
