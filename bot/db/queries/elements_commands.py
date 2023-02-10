@@ -85,17 +85,18 @@ async def add_new_unlocked_element(
         session_maker: sessionmaker,
         game_id: int,
         element_id: int
-):
+) -> bool:
     async with session_maker() as session:
         game = await session.get(Game, game_id)
         if element_id in game.unlocked_elements_ids:
-            return
+            return False
         await session.execute(
             sa.update(Game).
             where(Game.id == game_id).
             values(unlocked_elements_ids=Game.unlocked_elements_ids + [element_id])
         )
         await session.commit()
+        return True
 
 
 async def get_user_unlocked_elements(

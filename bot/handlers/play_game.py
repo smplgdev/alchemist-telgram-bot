@@ -48,18 +48,24 @@ async def game_handler(call: types.CallbackQuery, callback_data: GameCallback, s
             ]
         )
         if new_element:
-            await call.answer(
-                strings.YOU_OPENED_NEW_ELEMENT.format(
-                    element_title=new_element.title_ru
-                ),
-                show_alert=True
-            )
-
-            await elements_commands.add_new_unlocked_element(
+            is_not_opened = await elements_commands.add_new_unlocked_element(
                 session_maker=session_maker,
                 game_id=game_id,
                 element_id=new_element.id
             )
+            if is_not_opened:
+                await call.answer(
+                    strings.YOU_OPENED_NEW_ELEMENT.format(
+                        element_title=new_element.title_ru
+                    ),
+                    show_alert=True
+                )
+            else:
+                await call.answer(
+                    strings.IT_ALREADY_OPENED.format(
+                        element_title=new_element.title_ru
+                    )
+                )
         else:
             await call.answer(
                 strings.ELEMENT_NOT_EXIST

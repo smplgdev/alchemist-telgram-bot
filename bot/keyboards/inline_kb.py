@@ -37,5 +37,5 @@ def get_user_elements_keyboard(
                 else None
             )
         )
-    builder.adjust(1)
+    builder.adjust(2)
     return builder.as_markup()
