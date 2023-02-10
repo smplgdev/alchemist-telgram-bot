@@ -26,7 +26,8 @@ async def initialize_game(message: types.Message, session_maker: sessionmaker):
         game_id=game.id,
         elements=elements,
         elements_category_id=None,
-        first_picked_element_id=None
+        first_picked_element_id=None,
+        page=1
     )
     await message.answer(
         strings.PLAY_MENU,

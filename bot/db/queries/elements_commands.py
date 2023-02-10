@@ -102,7 +102,7 @@ async def add_new_unlocked_element(
 async def get_user_unlocked_elements(
         session_maker: sessionmaker,
         game_id: int,
-        category_id: int = None
+        category_id: int = None,
 ) -> list[Element]:
     elements: list[Element] = []
     async with session_maker() as session:
@@ -128,3 +128,4 @@ async def get_user_unlocked_elements(
             )
             element = query.scalars().first()
             elements.append(element)
+        return elements
