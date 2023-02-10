@@ -38,9 +38,9 @@ async def main():
 
     async_engine = create_async_engine(postgres_url)
     session_maker = create_session_maker(async_engine)
-    await delete_schemas(engine=async_engine, metadata=BaseModel.metadata)
-    await proceed_schemas(engine=async_engine, metadata=BaseModel.metadata)
-    await create_elements(session_maker)
+    # await delete_schemas(engine=async_engine, metadata=BaseModel.metadata)
+    # await proceed_schemas(engine=async_engine, metadata=BaseModel.metadata)
+    # await create_elements(session_maker)
 
     redis = Redis(
         host=config.REDIS_IP,
